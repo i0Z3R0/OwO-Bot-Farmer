@@ -31,7 +31,7 @@ async def on_message(message):
 			time.sleep(6)
 			async for message in channel.history(limit=1):
 				content = message.content
-				if 'captcha' in message.content:
+				if 'captcha' in content:
 					print("CAPTCHA DETECTED, EXITING")
 					await channel.send("CAPTCHA DETECTED, STOPPING")
 					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
@@ -59,18 +59,43 @@ async def on_message(message):
 			time.sleep(6)
 			async for message in channel.history(limit=1):
 				content = message.content
-				if 'captcha' in message.content:
+				if 'captcha' in content:
 					print("CAPTCHA DETECTED, EXITING")
 					await channel.send("CAPTCHA DETECTED, STOPPING")
 					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
 					return True
-				if 'found' in message.content:
-					print("SUCCESS")
-					await channel.send("SUCCESS")
-				if 'lootbox' in message.content:
+				if 'lootbox' in content:
 					print("LOOTBOX FOUND")
 					await message.pin()
 					await channel.send("LOOTBOX FOUND")
+				# If you don't have any gems equipped,
+				# the word 'found' doesn't show up... but 'spent' does lol
+				if 'found' in content or 'spent' in content:
+					print("SUCCESS")
+					await channel.send("SUCCESS")
+			time.sleep(random.uniform(11, 16))
+
+	if message.content == '$$$owob':
+		print("STARTING AUTOBATTLE")
+		webhook = await client.fetch_webhook('942950784180563998')
+		await webhook.send(content="Starting Auto Battle")
+		while True:
+			await message.channel.send('owo battle')
+			time.sleep(6)
+			async for message in channel.history(limit=1):
+				content = message.content
+				if 'captcha' in content:
+					print("CAPTCHA DETECTED, EXITING")
+					await channel.send("CAPTCHA DETECTED, STOPPING")
+					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
+					return True
+				if 'weapon crate' in content:
+					print("LOOTBOX FOUND")
+					await message.pin()
+					await channel.send("WEAPON CRATE FOUND")
+				if len(message.embeds) > 0:
+					print("SUCCESS")
+					await channel.send("SUCCESS")
 			time.sleep(random.uniform(11, 16))
 
 client.run(token, bot=False)

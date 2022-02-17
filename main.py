@@ -11,6 +11,7 @@ jtopy = json.dumps(settingU)
 setting = json.loads(jtopy)
 token = setting['token']
 startValue = int(setting['startValue'])
+webhookID = setting['webhookID']
 
 client = discord.Client()
 
@@ -23,7 +24,7 @@ async def on_message(message):
 	channel = message.channel
 	if message.content == '$$$owocf':
 		print("STARTING AUTO COINFLIP")
-		webhook = await client.fetch_webhook('942950784180563998')
+		webhook = await client.fetch_webhook(webhookID)
 		await webhook.send(content="Starting Auto CoinFlip")
 		nextflipvalue = startValue
 		while True:
@@ -52,7 +53,7 @@ async def on_message(message):
 
 	if message.content == '$$$owoh':
 		print("STARTING AUTOHUNT")
-		webhook = await client.fetch_webhook('942950784180563998')
+		webhook = await client.fetch_webhook(webhookID)
 		await webhook.send(content="Starting Auto Hunt")
 		while True:
 			await message.channel.send('owo hunt')
@@ -77,7 +78,7 @@ async def on_message(message):
 
 	if message.content == '$$$owob':
 		print("STARTING AUTOBATTLE")
-		webhook = await client.fetch_webhook('942950784180563998')
+		webhook = await client.fetch_webhook(webhookID)
 		await webhook.send(content="Starting Auto Battle")
 		while True:
 			await message.channel.send('owo battle')
@@ -97,5 +98,14 @@ async def on_message(message):
 					print("SUCCESS")
 					await channel.send("SUCCESS")
 			time.sleep(random.uniform(11, 16))
+
+	if message.content == '$$$owowo':
+		print("STARTING AUTO OWO")
+		webhook = await client.fetch_webhook(webhookID)
+		await webhook.send(content="Starting Auto OwO")
+		while True:
+			await message.channel.send('owo')
+			print("OwO Sent")
+			time.sleep(random.uniform(16, 17))
 
 client.run(token, bot=False)

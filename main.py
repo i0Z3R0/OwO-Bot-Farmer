@@ -108,4 +108,12 @@ async def on_message(message):
 			print("OwO Sent")
 			time.sleep(random.uniform(16, 17))
 
+	if message.content == '$$$owobuywc':
+		print("STARTING AUTO WEAPON CRATE PURCHASE")
+		webhook = await client.fetch_webhook(webhookID)
+		await webhook.send(content="Starting Auto Weapon Crate Purchase")
+		while True:
+			await message.channel.send('owo buy 100')
+			time.sleep(random.uniform(6,7))
+
 client.run(token, bot=False)

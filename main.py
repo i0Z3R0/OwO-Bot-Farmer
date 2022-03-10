@@ -99,6 +99,48 @@ async def on_message(message):
 					await channel.send("SUCCESS")
 			time.sleep(random.uniform(11, 16))
 
+	if message.content == '$$$owohb':
+		print("STARTING AUTOHUNT AND AUTOBATTLE")
+		webhook = await client.fetch_webhook(webhookID)
+		await webhook.send(content="Starting Auto Hunt / Battle")
+		while True:
+			await message.channel.send('owo hunt')
+			time.sleep(6)
+			async for message in channel.history(limit=1):
+				content = message.content
+				if 'captcha' in content:
+					print("CAPTCHA DETECTED, EXITING")
+					await channel.send("CAPTCHA DETECTED, STOPPING")
+					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
+					return True
+				if 'lootbox' in content:
+					print("LOOTBOX FOUND")
+					await message.pin()
+					await channel.send("LOOTBOX FOUND")
+				# If you don't have any gems equipped,
+				# the word 'found' doesn't show up... but 'spent' does lol
+				if 'found' in content or 'spent' in content:
+					print("SUCCESS")
+					await channel.send("SUCCESS")
+			time.sleep(random.uniform(3, 6))
+			await message.channel.send('owo battle')
+			time.sleep(4)
+			async for message in channel.history(limit=1):
+				content = message.content
+				if 'captcha' in content:
+					print("CAPTCHA DETECTED, EXITING")
+					await channel.send("CAPTCHA DETECTED, STOPPING")
+					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
+					return True
+				if 'weapon crate' in content:
+					print("LOOTBOX FOUND")
+					await message.pin()
+					await channel.send("WEAPON CRATE FOUND")
+				if len(message.embeds) > 0:
+					print("SUCCESS")
+					await channel.send("SUCCESS")
+			time.sleep(random.uniform(2, 6))			
+
 	if message.content == '$$$owowo':
 		print("STARTING AUTO OWO")
 		webhook = await client.fetch_webhook(webhookID)
@@ -114,6 +156,13 @@ async def on_message(message):
 		await webhook.send(content="Starting Auto Weapon Crate Purchase")
 		while True:
 			await message.channel.send('owo buy 100')
-			time.sleep(random.uniform(6,7))
+			async for message in channel.history(limit=1):
+				content = message.content
+				if 'captcha' in content:
+					print("CAPTCHA DETECTED, EXITING")
+					await channel.send("CAPTCHA DETECTED, STOPPING")
+					await webhook.send('@everyone CAPTCHA DETECTED, STOPPING')
+					return True
+			time.sleep(random.uniform(5,7))
 
 client.run(token, bot=False)
